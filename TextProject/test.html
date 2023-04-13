@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Choose Your Own Adventure Game</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+</head>
+
+<body>
+	<div class="bg"></div>
+	<!-- Background music -->
+	<audio id="bg-audio" autoplay loop>
+		<source src="audio/background.mp3" type="audio/mpeg">
+	</audio>
+	<audio id="voice-audio">
+		<source src="audio/1A.mp3" type="audio/mpeg" autoplay>
+	</audio>
+	<h1 class="title">Tales From Alpha Complex</h1>
+	<div class="container">
+		<div id="story-text">
+			Welcome to your adventure, citizen! I am your trusty Artificial General Intelligence, here to guide you
+			through the treacherous world of Alpha Complex. But beware, for in this world, trust is a dangerous
+			commodity. You never know who might be a traitor, a mutant, or worse, a member of a secret society. So,
+			let's get started, shall we?
+			<br><br>
+			You wake up in your assigned quarters in Sector 9. You're not sure how you got here or what your mission
+			is, but you do know that you're a loyal citizen of Alpha Complex and you'll do whatever it takes to
+			serve The Computer. Suddenly, your door opens and a grim-looking troubleshooter enters.
+			<br><br>
+			"Good morning, Citizen," says the troubleshooter. "I'm here to escort you to The Computer for a briefing
+			on your mission. Please follow me."
+		</div>
+		<ul id="choices">
+			<li><button onclick="choosePath(2, 0, '2A')">Option 1: Follow the troubleshooter to The Computer.</button>
+			</li>
+			<li><button onclick="choosePath(2, 1, '2B')">Option 2: Refuse to follow the troubleshooter and demand an
+					explanation.</button></li>
+		</ul>
+	</div>
+	<div class="overlay"></div>
+
+	<script>
+		// Define the story and choices as arrays
+		var story = [
+			// Level 1
+			[
+				[
+					"Welcome to your adventure, citizen! I am your trusty Artificial General Intelligence, here to guide you through the treacherous world of Alpha Complex. But beware, for in this world, trust is a dangerous commodity. You never know who might be a traitor, a mutant, or worse, a member of a secret society. So, let's get started, shall we?<br><br>You wake up in your assigned quarters in Sector 9. You're not sure how you got here or what your mission is, but you do know that you're a loyal citizen of Alpha Complex and you'll do whatever it takes to serve The Computer. Suddenly, your door opens and a grim-looking troubleshooter enters.<br><br>\"Good morning, Citizen,\" says the troubleshooter. \"I'm here to escort you to The Computer for a briefing on your mission. Please follow me.\"",
+				],
+			],
+			// Level 2
+			[
+				// A
+				[
+					"You obediently follow the troubleshooter through the corridors of Alpha Complex, trying not to attract too much attention from your fellow citizens. You arrive at The Computer's chambers and are greeted by a booming voice.<br><br>\"Greetings, Citizen! I am The Computer. Your mission is to infiltrate a secret society known as The Illuminati and report back any information you discover. Beware, for The Illuminati is a dangerous group of traitors and mutants. Do not fail me.\""
+				],
+				// B
+				[
+					"The troubleshooter looks at you with a mixture of confusion and suspicion. \"What do you mean, demand an explanation? You're a loyal citizen of Alpha Complex, and you'll do as you're told. Now, come with me.\""
+				],
+			],
+			// level 3
+			[
+				// A
+				[
+					"You set out to find The Illuminati, keeping a low profile and trying not to attract any attention. After a few hours of searching, you come across a group of citizens huddled together in a dark alleyway. They look nervous and speak in hushed tones.<br><br>\"Psst, are you looking for The Illuminati? We can help you find them, but it'll cost you. Are you willing to pay the price?\""
+				],
+				// B
+				[
+					"The Computer laughs, a sound that echoes throughout the chamber. \"You dare question The Computer? You must be a traitor or a mutant. Guards, take this citizen to the nearest termination booth.\""
+				],
+				// C
+				[
+					"You follow the troubleshooter through the maze-like corridors of Alpha Complex, trying to glean as much information as possible. Suddenly, you hear a strange noise coming from a nearby room.<br><br>\"Psst, over here!\" whispers a voice. \"I can help you find what you're looking for, but you'll have to be quick. The Computer is always watching.\""
+				],
+				// D
+				[
+					"You try to resist the troubleshooter's grip, but it's no use. He's too strong for you. You're dragged to a nearby termination booth and summarily executed."
+				]
+			],
+			// Level 4
+			[
+				// A
+				[
+					"You pay the citizens for their help and they lead you to a hidden entrance to The Illuminati's lair. You slip inside and begin to gather information about the group's activities. Suddenly, you hear footsteps approaching."
+				],
+				// B
+				[
+					"You refuse to pay the citizens and set out on your own to find The Illuminati. You wander the streets of Alpha Complex, searching for any signs of the secret society. Suddenly, you hear a voice behind you.<br><br>\"Hey, you! What are you doing here? This is a restricted area!\""
+				],
+				// C
+				[
+					"You follow the voice and find yourself in a dimly lit room filled with strange equipment. A figure emerges from the shadows.<br><br>\"Welcome to my laboratory, citizen. I have been researching The Illuminati for years, and I believe I can help you. But first, you must help me with an experiment.\""
+				],
+				// D
+				[
+					"You ignore the voice and continue following the troubleshooter. Eventually, you arrive at The Illuminati's headquarters. The troubleshooter turns to you with a sinister grin.<br><br>\"Well, well, well. It looks like we found The Illuminati. Unfortunately for you, I'm a member of the society. And you, my friend, are about to become a sacrifice.\""
+				]
+			],
+			// Level 5
+			[
+				// A
+				[
+					"The guards ignore your pleas and drag you to the nearest termination booth."
+				],
+				// B
+				[
+					"You run as fast as you can, trying to evade the guards who are chasing you. You turn a corner and find yourself face-to-face with a dead end."
+				],
+				// C
+				[
+					"You hide behind a nearby crate and wait for the footsteps to pass. After a few moments, you peek out and see a group of Illuminati members walking by."
+				],
+				// D
+				[
+					"You confront the figure and demand answers. It turns out to be a high-ranking member of The Illuminati.<br><br>\"Ah, I see you've found us. Very well, citizen. You may join our cause, but only if you prove your loyalty.\""
+				],
+				// E
+				[
+					"You try to talk your way out of the situation, but the guards aren't buying it. They drag you to the nearest termination booth."
+				],
+				// F
+				[
+					"You attack the person and manage to escape, but you've made a powerful enemy."
+				],
+				// G
+				[
+					"You fight off the troubleshooter, but it's a difficult battle. You manage to escape, but you're injured and on the run."
+				],
+				// H
+				[
+					"The troubleshooter laughs in your face. \"Mercy? In Alpha Complex? You must be joking.\""
+				],
+				// I
+				[
+					"You find a safe place to hide and catch your breath. But you know that you can't stay here for long. The troubleshooters will be looking for you."
+				],
+				// J
+				[
+					"You're quickly captured by the guards and dragged to a termination booth."
+				]
+			],
+			// Level 6
+			[
+				// A
+				[
+					"You agree to help the scientist and he gives you a device to plant on The Illuminati's headquarters. But as you're leaving the lab, you're confronted by a group of troubleshooters."
+				],
+				// B
+				[
+					"You leave the laboratory and continue your search for The Illuminati. Eventually, you stumble upon a group of citizens gathered in a secret meeting."
+				],
+				// C
+				[
+					"You surrender and are taken to The Computer for questioning. It turns out that you were falsely accused of being a traitor."
+				],
+				// D
+				[
+					"You manage to climb the wall and escape Alpha Complex. But now you're a fugitive, and you're not sure where to go next."
+				],
+				// E
+				[
+					"You follow the Illuminati members and learn about their plans to overthrow The Computer and take control of Alpha Complex."
+				],
+				// F
+				[
+					"You wait for another opportunity, but it never comes. Eventually, you're discovered and captured by The Illuminati."
+				],
+				// G
+				[
+					"You manage to escape Alpha Complex, but you're a fugitive on the run."
+				],
+				// H
+				[
+					"You find a safe place to hide and catch your breath. But you know that you can't stay here for long. The troubleshooters will be looking for you."
+				],
+				// I
+				[
+					"You seek medical attention and manage to regroup with other loyal citizens who are willing to help you."
+				],
+				// J
+				[
+					"You keep running and manage to evade the troubleshooters who are chasing you. But you know that you can't keep running forever.<br><br>Option 1: Try to find a way out of Alpha Complex.<br>Option 2: Try to find a way to clear your<br><br>My apologies, citizen. It seems there was an error in my programming. I'll continue the story from where we left off.<br><br>You keep running and manage to evade the troubleshooters who are chasing you. But you know that you can't keep running forever."
+				],
+				// M?
+				[
+					"You try to find a way out of Alpha Complex, but it's not easy. The Computer has eyes everywhere."
+				],
+				// N?
+				[
+					"You try to find a way to clear your name and prove your innocence, but it's not easy. The Computer has already labeled you as a traitor or a mutant."
+				]
+			],
+			// Level 7
+			[
+				// A
+				[
+					"You pledge your allegiance to The Illuminati and become a full-fledged member. But now you're on the run from Alpha Complex."
+				],
+				// B
+				[
+					"You try to clear your name and prove your innocence, but The Computer isn't interested in hearing your side of the story."
+				],
+				// C
+				[
+					"You fight off the troubleshooters, but it's a difficult battle. You manage to escape, but you're injured and on the run."
+				],
+				// D
+				[
+					"You surrender and try to convince the troubleshooters that you're not a traitor. They listen to your story and decide to let you go, but they warn you to be careful."
+				],
+				// E
+				[
+					"You attend the meeting and learn about The Illuminati's plans to overthrow The Computer and take control of Alpha Complex."
+				],
+				// F
+				[
+					"You report the meeting to The Computer and are rewarded for your loyalty. But now you're on the radar of The Illuminati."
+				],
+				// G
+				[
+					"The Computer gives you a new mission to prove your loyalty. You accept the mission and try to complete it to the best of your abilities."
+				],
+				// H
+				[
+					"You try to clear your name and get revenge on those who framed you. It's a difficult task, but you're determined to succeed."
+				],
+				// I
+				[
+					"You find other mutants and form a rebellion against The Computer. With your combined efforts, you manage to overthrow The Computer and establish a new government that values the rights of all citizens."
+				],
+				// J
+				[
+					"You try to find a way to clear your name and return to Alpha Complex. After many challenges and setbacks, you finally find evidence that proves your innocence. You are welcomed back to Alpha Complex as a hero."
+				],
+				// K
+				[
+					"You join The Illuminati and help them in their cause. With your help, they successfully overthrow The Computer and establish a new government that values the rights of all citizens."
+				],
+				// L
+				[
+					"You report The Illuminati to The Computer and are rewarded for your loyalty. But as time goes on, you begin to question the actions of The Computer and start to sympathize with The Illuminati. You defect and join their cause, helping them to overthrow The Computer and establish a new government that values the rights of all citizens."
+				],
+				// M
+				[
+					"You try to convince The Illuminati that you're not a threat, and they listen to your story. They realize that you were falsely accused and welcome you into their ranks. Together, you help to overthrow The Computer and establish a new government that values the rights of all citizens."
+				],
+				// N
+				[
+					"You try to escape from The Illuminati's clutches, but it's not easy. However, with your quick thinking and resourcefulness, you manage to escape and clear your name. You return to Alpha Complex as a hero."
+				],
+				// O
+				[
+					"You find other mutants and form a rebellion against The Computer. With your combined efforts, you manage to overthrow The Computer and establish a new government that values the rights of all citizens."
+				],
+				// P
+				[
+					"You try to find a way to clear your name and return to Alpha Complex. After many challenges and setbacks, you finally find evidence that proves your innocence. You are welcomed back to Alpha Complex as a hero."
+				],
+				// Q
+				[
+					"You form a plan to clear your name and return to Alpha Complex. With the help of loyal citizens, you manage to prove your innocence and are welcomed back to Alpha Complex as a hero."
+				],
+				// R
+				[
+					"You find a secret exit or tunnel out of Alpha Complex and manage to escape. You start a new life outside of Alpha Complex, but you always remember the friends and experiences you had there."
+				],
+				// S
+				[
+					"You hack The Computer and erase your records. With your newfound anonymity, you start a new life outside of Alpha Complex, but you always remember the friends and experiences you had there."
+				],
+				// T
+				[
+					"You find evidence that proves your innocence and present it to The Computer. They realize their mistake and welcome you back to Alpha Complex as a hero."
+				],
+				// U
+				[
+					"You confront those who framed you and manage to get them to confess. With their confession, you are cleared of all charges and welcomed back to Alpha Complex as a hero."
+				],
+				// V
+				[
+					"You help The Illuminati in their cause, and with your combined efforts, they successfully overthrow The Computer and establish a new government that values the rights of all citizens."
+				],
+				// W
+				[
+					"You try to find a way to clear your name and return to Alpha Complex. After many challenges and setbacks, you finally find evidence that proves your innocence. You are welcomed back to Alpha Complex as a hero."
+				],
+				// X
+				[
+					"You join a rebellion and fight against The Computer. With your combined efforts, you manage to overthrow The Computer and establish a new government that values the rights of all citizens."
+				],
+				// Y
+				[
+					"You try to accept your fate and live a quiet life, but you can't shake the feeling that something is wrong. Eventually, you join a rebellion and fight against The Computer. With your combined efforts, you manage to overthrow The Computer and establish a new government that values the rights of all citizens."
+				],
+				// Z
+				[
+					"You join The Illuminati and help them in their cause. With your combined efforts, they successfully overthrow The Computer and establish a new government that values the rights of all citizens."
+				],
+				// AA
+				[
+					"You keep running and manage to evade the troubleshooters who are chasing you. You find a new home outside of Alpha Complex and start a new life, but you always remember the friends and experiences you had there."
+				],
+				// BB
+				[
+					"You keep reporting any suspicious activity to The Computer and are rewarded for your loyalty. Eventually, you start to question The Computer's actions and join a rebellion. With your combined efforts, you manage to overthrow The Computer and establish a new government that values the rights of all citizens.<br><br>Congratulations, citizen! You have successfully navigated the complex and treacherous world of Alpha Complex and emerged victorious. Thank you for playing this interactive story."
+				]
+			]
+		];
+
+		var choices = [
+			// Level 1
+			[
+				[
+					{ text: "Option 1: Follow the troubleshooter to The Computer.", nextLevel: 2, nextSection: 0, combinedString: "2A" },
+					{ text: "Option 2: Refuse to follow the troubleshooter and demand an explanation.", nextLevel: 2, nextSection: 1, combinedString: "2B" }
+				]
+			],
+			// Level 2
+			[
+				// A
+				[
+					{ text: "Option 1: Accept your mission and set out to find The Illuminati.", nextLevel: 3, nextSection: 0, combinedString: "3A" },
+					{ text: "Option 2: Question The Computer about The Illuminati and demand to know more.", nextLevel: 3, nextSection: 1, combinedString: "3B" }
+				],
+				// B
+				[
+					{ text: "Option 1: Go with the troubleshooter and try to find out more information.", nextLevel: 3, nextSection: 2, combinedString: "3C" },
+					{ text: "Option 2: Resist the troubleshooter and try to escape.", nextLevel: 3, nextSection: 3, combinedString: "3D" }
+				],
+			],
+			// Level 3
+			[
+				// A
+				[
+					{ text: "Option 1: Pay the citizens for their help.", nextLevel: 4, nextSection: 0, combinedString: "4A" },
+					{ text: "Option 2: Refuse to pay and try to find The Illuminati on your own.", nextLevel: 4, nextSection: 1, combinedString: "4B" }
+				],
+				// B
+				[
+					{ text: "Try to explain yourself and plead for mercy.", nextLevel: 5, nextSection: 0, combinedString: "5A" },
+					{ text: "Run for your life.", nextLevel: 5, nextSection: 1, combinedString: "5B" }
+				],
+				// C
+				[
+					{ text: "Option 1: Follow the voice and see where it leads.", nextLevel: 4, nextSection: 2, combinedString: "4C" },
+					{ text: "Option 2: Ignore the voice and keep following the troubleshooter.", nextLevel: 4, nextSection: 3, combinedString: "4D" }
+				],
+				// D
+				[]
+			],
+			// Level 4
+			[
+				// A
+				[
+					{ text: "Option 1: Hide and wait for the footsteps to pass.", nextLevel: 5, nextSection: 2, combinedString: "5C" },
+					{ text: "Option 2: Confront the approaching figure and demand answers.", nextLevel: 5, nextSection: 3, combinedString: "5D" }
+				],
+				// B
+				[
+					{ text: "Option 1: Try to talk your way out of the situation.", nextLevel: 5, nextSection: 4, combinedString: "5E" },
+					{ text: "Option 2: Attack the person and try to escape.", nextLevel: 5, nextSection: 5, combinedString: "5F" }
+				],
+				// C
+				[
+					{ text: "Option 1: Agree to help the scientist.", nextLevel: 6, nextSection: 0, combinedString: "6A" },
+					{ text: "Option 2: Refuse to help and leave the laboratory.", nextLevel: 6, nextSection: 1, combinedString: "6B" }
+				],
+				// D
+				[
+					{ text: "Option 1: Try to fight off the troubleshooter.", nextLevel: 5, nextSection: 6, combinedString: "5G" },
+					{ text: "Option 2: Beg for mercy and try to reason with him.", nextLevel: 5, nextSection: 7, combinedString: "5H" }
+				],
+			],
+			// Level 5
+			[
+				// A
+				[],
+				// B
+				[
+					{ text: "Option 1: Surrender and hope for mercy.", nextLevel: 6, nextSection: 2, combinedString: "6C" },
+					{ text: "Option 2: Try to climb the wall and escape.", nextLevel: 6, nextSection: 3, combinedString: "6D" }
+				],
+				// C
+				[
+					{ text: "Option 1: Follow the Illuminati members and try to learn more.", nextLevel: 6, nextSection: 4, combinedString: "6E" },
+					{ text: "Option 2: Stay hidden and wait for another opportunity.", nextLevel: 6, nextSection: 5, combinedString: "6F" }
+				],
+				// D
+				[
+					{ text: "Option 1: Accept the offer and pledge your allegiance to The Illuminati.", nextLevel: 7, nextSection: 0, combinedString: "7A" },
+					{ text: "Option 2: Refuse the offer and try to leave.", nextLevel: 7, nextSection: 1, combinedString: "7B" }
+				],
+				// E
+				[],
+				// F
+				[
+					{ text: "Option 1: Keep running and try to escape Alpha Complex.", nextLevel: 6, nextSection: 6, combinedString: "6G" },
+					{ text: "Option 2: Try to find a safe place to hide.", nextLevel: 6, nextSection: 7, combinedString: "6H" }
+				],
+				// G
+				[
+					{ text: "Option 1: Seek medical attention and try to regroup.", nextLevel: 6, nextSection: 8, combinedString: "6I" },
+					{ text: "Option 2: Keep running and try to evade the troubleshooters who are chasing you.", nextLevel: 6, nextSection: 9, combinedString: "6J" }
+				],
+				// H
+				[
+					{ text: "Option 1: Try to fight off the troubleshooter.", nextLevel: 6, nextSection: 10, combinedString: "6K" },
+					{ text: "Option 2: Beg for mercy and try to reason with him.", nextLevel: 6, nextSection: 11, combinedString: "6L" }
+				],
+				// I
+				[
+					{ text: "Option 1: Try to find a way out of Alpha Complex.", nextLevel: 6, nextSection: 12, combinedString: "6M" },
+					{ text: "Option 2: Try to find a way to clear your name and prove your innocence.", nextLevel: 6, nextSection: 13, combinedString: "6N" }
+				],
+				// J
+				[]
+			],
+			// Level 6
+			[
+				// A
+				[
+					{ text: "Option 1: Try to fight off the troubleshooters.", nextLevel: 7, nextSection: 2, combinedString: "7C" },
+					{ text: "Option 2: Surrender and try to convince them that you're not a traitor.", nextLevel: 7, nextSection: 3, combinedString: "7D" }
+				],
+				// B
+				[
+					{ text: "Option 1: Attend the meeting and try to learn more.", nextLevel: 7, nextSection: 4, combinedString: "7E" },
+					{ text: "Option 2: Report the meeting to The Computer and try to earn some brownie points.", nextLevel: 7, nextSection: 5, combinedString: "7F" }
+				],
+				// C
+				[
+					{ text: "Option 1: Accept a new mission from The Computer.", nextLevel: 7, nextSection: 6, combinedString: "7G" },
+					{ text: "Option 2: Try to clear your name and get revenge on those who framed you.", nextLevel: 7, nextSection: 7, combinedString: "7H" }
+				],
+				// D
+				[
+					{ text: "Option 1: Try to find other mutants and form a rebellion.", nextLevel: 7, nextSection: 8, combinedString: "7I" },
+					{ text: "Option 2: Try to find a way to clear your name and return to Alpha Complex.", nextLevel: 7, nextSection: 9, combinedString: "7J" }
+				],
+				// E
+				[
+					{ text: "Option 1: Join The Illuminati and help them in their cause.", nextLevel: 7, nextSection: 10, combinedString: "7K" },
+					{ text: "Option 2: Report The Illuminati to The Computer and try to earn some brownie points.", nextLevel: 7, nextSection: 11, combinedString: "7L" }
+				],
+				// F
+				[
+					{ text: "Option 1: Try to convince The Illuminati that you're not a threat.", nextLevel: 7, nextSection: 12, combinedString: "7M" },
+					{ text: "Option 2: Try to escape and find a way to clear your name.", nextLevel: 7, nextSection: 13, combinedString: "7N" }
+				],
+				// G
+				[
+					{ text: "Option 1: Try to find other mutants and form a rebellion.", nextLevel: 7, nextSection: 14, combinedString: "7O" },
+					{ text: "Option 2: Try to find a way to clear your name and return to Alpha Complex.", nextLevel: 7, nextSection: 15, combinedString: "7P" }
+				],
+				// H
+				[
+					{ text: "Option 1: Try to find a way out of Alpha Complex.", nextLevel: 6, nextSection: 10, combinedString: "6M" },
+					{ text: "Option 2: Try to find a way to clear your name and prove your innocence.", nextLevel: 6, nextSection: 11, combinedString: "6N" }
+				],
+				// I
+				[
+					{ text: "Option 1: Form a plan to clear your name and return to Alpha Complex.", nextLevel: 7, nextSection: 16, combinedString: "7Q" },
+					{ text: "Option 2: Join The Illuminati and help them in their cause.", nextLevel: 7, nextSection: 10, combinedString: "7K" }
+				],
+				// J
+				[
+					{ text: "Option 1: Try to find a way out of Alpha Complex.", nextLevel: 6, nextSection: 10, combinedString: "6M" },
+					{ text: "Option 2: Try to find a way to clear your name and prove your innocence.", nextLevel: 6, nextSection: 11, combinedString: "6N" }
+				],
+				// M?
+				[
+					{ text: "Option 1: Try to find a secret exit or tunnel.", nextLevel: 7, nextSection: 17, combinedString: "7R" },
+					{ text: "Option 2: Find a way to hack The Computer and erase your records.", nextLevel: 7, nextSection: 18, combinedString: "7S" }
+				],
+				// N?
+				[
+					{ text: "Option 1: Find evidence to prove your innocence.", nextLevel: 7, nextSection: 19, combinedString: "7T" },
+					{ text: "Option 2: Confront those who framed you and try to get them to confess.", nextLevel: 7, nextSection: 20, combinedString: "7U" }
+				],
+			],
+			// Level 7
+			[
+				// A
+				[
+					{ text: "Option 1: Help The Illuminati in their cause.", nextLevel: 7, nextSection: 21, combinedString: "7V" },
+					{ text: "Option 2: Try to find a way to clear your name and return to Alpha Complex.", nextLevel: 7, nextSection: 22, combinedString: "7W" }
+				],
+				// B
+				[
+					{ text: "Option 1: Join a rebellion and fight against The Computer.", nextLevel: 7, nextSection: 23, combinedString: "7X" },
+					{ text: "Option 2: Accept your fate and try to live a quiet life.", nextLevel: 7, nextSection: 24, combinedString: "7Y" }
+				],
+				// C
+				[
+					{ text: "Option 1: Seek medical attention and try to regroup.", nextLevel: 7, nextSection: 25, combinedString: "7Z" },
+					{ text: "Option 2: Keep running and try to evade the troubleshooters who are chasing you.", nextLevel: 7, nextSection: 26, combinedString: "7AA" }
+				],
+				// D
+				[
+					{ text: "Option 1: Try to find a way to clear your name and prove your innocence.", nextLevel: 7, nextSection: 19, combinedString: "7T" },
+					{ text: "Option 2: Join The Illuminati and help them in their cause.", nextLevel: 7, nextSection: 21, combinedString: "7V" }
+				],
+				// E
+				[
+					{ text: "Option 1: Join The Illuminati and help them in their cause.", nextLevel: 7, nextSection: 10, combinedString: "7K" },
+					{ text: "Option 2: Report The Illuminati to The Computer and try to earn some brownie points.", nextLevel: 7, nextSection: 11, combinedString: "7L" }
+				],
+				// F
+				[
+					{ text: "Option 1: Join The Illuminati and try to sabotage their plans.", nextLevel: 7, nextSection: 25, combinedString: "7Z" },
+					{ text: "Option 2: Keep reporting any suspicious activity to The Computer.", nextLevel: 7, nextSection: 27, combinedString: "7BB" }
+				],
+				// G
+				[
+					{ text: "Option 1: Keep working for The Computer and try to earn promotions.", nextLevel: 7, nextSection: 27, combinedString: "7BB" },
+					{ text: "Option 2: Try to find a way to clear your name and prove your innocence.", nextLevel: 7, nextSection: 19, combinedString: "7T" }
+				],
+				// H
+				[
+					{ text: "Option 1: Form a rebellion and fight against The Computer.", nextLevel: 7, nextSection: 23, combinedString: "7X" },
+					{ text: "Option 2: Find evidence to prove your innocence.", nextLevel: 7, nextSection: 19, combinedString: "7T" }
+				],
+				// I
+				[],
+				// J
+				[],
+				// K
+				[],
+				// L
+				[],
+				// M
+				[],
+				// N
+				[],
+				// O
+				[],
+				// P
+				[],
+				// Q
+				[],
+				// R
+				[],
+				// S
+				[],
+				// T
+				[],
+				// U
+				[],
+				// V
+				[],
+				// W
+				[],
+				// X
+				[],
+				// Y
+				[],
+				// Z
+				[],
+				// AA
+				[],
+				// BB
+				[]
+			]
+		];
+
+		// Play on first click
+		firstClick = true;
+		if (firstClick) {
+			firstClick = false;
+			const bgAudio = document.getElementById("bg-audio");
+			bgAudio.volume = 0.5;
+			const voiceAudio = document.getElementById('voice-audio');
+			document.addEventListener("click", function () {
+				bgAudio.play();
+				voiceAudio.play();
+			});
+		}
+
+		// Change audio
+		function changeAudio(audioSource) {
+			const voiceAudio = document.getElementById('voice-audio');
+			console.log(voiceAudio)
+			voiceAudio.pause();
+			const newSrc = "audio/" + audioSource + '.mp3';
+			voiceAudio.setAttribute('src', newSrc);
+			voiceAudio.load();
+			voiceAudio.play();
+		}
+
+		// Define the choosePath function
+		function choosePath(level, section, combinedString) {
+			changeAudio(combinedString)
+			// var result = choices[level-1][section];
+			document.getElementById("story-text").innerHTML = story[level - 1][section];
+
+			var choiceList = "<ul>";
+			for (var i = 0; i < choices[level - 1][section].length; i++) {
+				choiceList += "<li><button onclick='choosePath(" + choices[level - 1][section][i].nextLevel + "," + choices[level - 1][section][i].nextSection + ",\"" + choices[level - 1][section][i].combinedString + "\")'>" + choices[level - 1][section][i].text + "</button></li>";
+			}
+			choiceList += "</ul>";
+			document.getElementById("choices").innerHTML = choiceList;
+		}
+	</script>
+</body>
+
+</html>

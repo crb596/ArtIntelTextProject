@@ -1,0 +1,82 @@
+html {
+    margin: 0;
+    height: 100%;
+}
+
+.bg {
+    background-image: url("bgimg.jpeg");
+    height: 100%;
+    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    z-index: -2;
+    pointer-events:none;
+}
+
+body {
+    margin: 0;
+    background-color: black;
+    color: white;
+    height: 100%;
+    font-family: 'DotGothic16', sans-serif;
+}
+
+ul{
+    list-style-type: none
+}
+
+/* Title */
+.title {
+    width: 100%;
+    position: absolute;
+    padding-top: 10px;
+    text-align: center;
+}
+
+
+.container {
+    width: 100%;
+    /* padding: 50px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.container div {
+    width: 50%;
+    font-size: 26px;
+}
+
+/* Make the bg image darker */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Choices */
+#choices {
+    list-style: none;
+}
+
+li button {
+    border: none;
+    background: none;
+    color: white;
+    font-family: 'DotGothic16', sans-serif;
+    font-size: 22px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+li button:hover {
+    background-color: rgb(13, 73, 72);
+}
